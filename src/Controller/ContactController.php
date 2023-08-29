@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -60,5 +61,15 @@ class ContactController extends AbstractController
 
         return new JsonResponse($jsonContact, Response::HTTP_CREATED, ["Location" => $location], true);
    }
+
+   #[Route('/api/contacts/{id}', name:"updateContact", methods:['PUT'])]
+   public function updateContact(Request $request, SerializerInterface $serializer, Contact $currentContact, EntityManagerInterface $em): JsonResponse 
+   {
+       $updatedContact = $serializer->deserialize($request->getContent(), Contact::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $currentContact]);
+       
+       $em->persist($updatedContact);
+       $em->flush();
+       return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+  }
 }
  

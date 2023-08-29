@@ -26,6 +26,7 @@ return [
         67 => [
             [['_route' => 'detailContact', '_controller' => 'App\\Controller\\ContactController::getDetailContacts'], ['id'], ['GET' => 0], null, false, true, null],
             [['_route' => 'deleteContact', '_controller' => 'App\\Controller\\ContactController::deleteContact'], ['id'], ['DELETE' => 0], null, false, true, null],
+            [['_route' => 'updateContact', '_controller' => 'App\\Controller\\ContactController::updateContact'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

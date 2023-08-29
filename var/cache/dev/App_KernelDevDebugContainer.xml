@@ -205,7 +205,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.RqMt_Kd"/>
+      <argument type="service" id=".service_locator.u1y.FLK"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1229,7 +1229,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.RqMt_Kd"/>
+      <argument type="service" id=".service_locator.u1y.FLK"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -2910,13 +2910,22 @@
         <argument key="urlGenerator" type="service_closure" id="router.default"/>
       </argument>
     </service>
-    <service id=".service_locator.RqMt_Kd" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.1MBFWd6" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="currentContact" type="service_closure" id=".errored..service_locator.1MBFWd6.App\Entity\Contact"/>
+        <argument key="em" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="serializer" type="service_closure" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.u1y.FLK" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\ContactController::createBook" type="service_closure" id=".service_locator.hJaifLh"/>
         <argument key="App\Controller\ContactController::deleteContact" type="service_closure" id=".service_locator.8delQOT"/>
         <argument key="App\Controller\ContactController::getAllContacts" type="service_closure" id=".service_locator.xqsyqsb"/>
         <argument key="App\Controller\ContactController::getDetailContacts" type="service_closure" id=".service_locator.Mt5Q6Ho"/>
+        <argument key="App\Controller\ContactController::updateContact" type="service_closure" id=".service_locator.1MBFWd6"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
@@ -2925,6 +2934,7 @@
         <argument key="App\Controller\ContactController:deleteContact" type="service_closure" id=".service_locator.8delQOT"/>
         <argument key="App\Controller\ContactController:getAllContacts" type="service_closure" id=".service_locator.xqsyqsb"/>
         <argument key="App\Controller\ContactController:getDetailContacts" type="service_closure" id=".service_locator.Mt5Q6Ho"/>
+        <argument key="App\Controller\ContactController:updateContact" type="service_closure" id=".service_locator.1MBFWd6"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
       </argument>
@@ -3154,6 +3164,9 @@
     </service>
     <service id=".errored..service_locator.8delQOT.App\Entity\Contact" class="App\Entity\Contact">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.8delQOT&quot;: it needs an instance of &quot;App\Entity\Contact&quot; but this type has been excluded in &quot;config/services.yaml&quot;."/>
+    </service>
+    <service id=".errored..service_locator.1MBFWd6.App\Entity\Contact" class="App\Entity\Contact">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.1MBFWd6&quot;: it needs an instance of &quot;App\Entity\Contact&quot; but this type has been excluded in &quot;config/services.yaml&quot;."/>
     </service>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
@@ -3764,13 +3777,14 @@
     <service id="doctrine.orm.default_entity_manager.event_manager" alias="doctrine.dbal.default_connection.event_manager"/>
     <service id="doctrine.migrations.metadata_storage" alias="doctrine.migrations.storage.table_storage"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.7nzbL4K" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.RqMt_Kd"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.u1y.FLK"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.o.uf2zi" alias=".service_locator.7nzbL4K"/>
     <service id=".service_locator.nfYbfFX" alias=".service_locator.Mt5Q6Ho"/>
     <service id=".service_locator.OvD6SVk" alias=".service_locator.hJaifLh"/>
-    <service id=".service_locator.lDCevCM" alias=".service_locator.RqMt_Kd"/>
+    <service id=".service_locator.iqhDkDI" alias=".service_locator.1MBFWd6"/>
+    <service id=".service_locator.xyxclh1" alias=".service_locator.u1y.FLK"/>
     <service id=".service_locator.LMuqDDe" alias=".service_locator.VHsrTPK"/>
     <service id=".service_locator.jUv.zyj" alias=".service_locator.O2p6Lk7"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
@@ -3783,6 +3797,7 @@
     <service id=".service_locator.o4AE8.o" alias=".service_locator.Mt5Q6Ho"/>
     <service id=".service_locator.ClPSIRU" alias=".service_locator.8delQOT"/>
     <service id=".service_locator.wmUQZ0y" alias=".service_locator.hJaifLh"/>
+    <service id=".service_locator.fUGfn4q" alias=".service_locator.1MBFWd6"/>
     <service id=".service_locator.ZzyNbBl" alias=".service_locator.O2p6Lk7"/>
     <service id=".service_locator.3bxtozr" alias=".service_locator._ju.bgC"/>
     <service id=".service_locator.u6DWx23" alias=".service_locator.cXsfP3P"/>
