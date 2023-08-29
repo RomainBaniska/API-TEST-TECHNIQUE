@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Repository\ContactRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,6 +34,14 @@ class ContactController extends AbstractController
 
          $jsonContact = $serializer->serialize($contact, 'json');
          return new JsonResponse ($jsonContact, Response::HTTP_OK, [], true);
+    }
+
+    #[Route('/api/contacts/{id}', name: 'deleteContact', methods: ['DELETE'])]
+    public function deleteContact(Contact $contact, EntityManagerInterface $em) : JsonResponse {
+        $em->remove($contact);
+        $em->flush();      
+
+        return new JsonResponse (null, Response::HTTP_NO_CONTENT);
     }
 }
  
