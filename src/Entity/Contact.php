@@ -111,17 +111,32 @@ class Contact
         return $this;
     }
 
-    public function getAge(): ?int
+    public function setAge(?int $age): static
     {
-        return $this->age;
-    }
+        // On fixe un minimum de 18 ans avec une condition
 
-    public function setAge(int $age): static
-    {
+        if ($age >= 18)
+        {
         $this->age = $age;
+        }
+        else {
+            $this->age = 18;
+        }
 
         return $this;
     }
+
+    // Pour erreur si <18 ans
+    // public function setAge(?int $age): static
+    // {
+    //     if ($age < 18) {
+    //         throw new \InvalidArgumentException("L'âge doit être au minimum de 18 ans.");
+    //     }
+    
+    //     $this->age = $age;
+    
+    //     return $this;
+    // }
 
     public function isActive(): bool
     {

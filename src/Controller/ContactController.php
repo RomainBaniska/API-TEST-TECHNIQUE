@@ -85,5 +85,25 @@ class ContactController extends AbstractController
 
       return new JsonResponse(['message' => 'Le contact a été togglé avec succès.'], JsonResponse::HTTP_OK);
   }
+
+//   // Filtrage des contacts actifs et inactifs (non fonctionnel)
+
+//   #[Route('/api/contacts/active', name: 'activeContacts', methods: ['GET'])]
+//     public function getActiveContacts(ContactRepository $contactRepository, SerializerInterface $serializer): JsonResponse
+//     {
+//         $activeContacts = $contactRepository->findBy(['isActive' => true]);
+
+//         $jsonActiveContacts = $serializer->serialize($activeContacts, 'json');
+//         return new JsonResponse($jsonActiveContacts, JsonResponse::HTTP_OK, [], true);
+//     }
+
+//     #[Route('/api/contacts/inactive', name: 'inactiveContacts', methods: ['GET'])]
+//     public function getInactiveContacts(ContactRepository $contactRepository, SerializerInterface $serializer): JsonResponse
+//     {
+//         $inactiveContacts = $contactRepository->findBy(['isActive' => false]);
+
+//         $jsonInactiveContacts = $serializer->serialize($inactiveContacts, 'json');
+//         return new JsonResponse($jsonInactiveContacts, JsonResponse::HTTP_OK, [], true);
+//     }
 }
  
