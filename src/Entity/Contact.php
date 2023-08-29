@@ -89,6 +89,18 @@ class Contact
         return $this->tel;
     }
 
+    // On ajoute une fonction numero international
+    public function getInternationalPhoneNumber(): ?string
+    {
+    // On va supprimer tous les caractères non numériques du numéro de téléphone
+        $cleanedNumber = preg_replace('/\D/', '', $this->tel);
+    // Ajoute le préfixe '+'
+        if (strpos($cleanedNumber, '+') !== 0) {
+        $cleanedNumber = '+' . $cleanedNumber;
+        }
+        return $cleanedNumber;
+    }
+
     public function setTel(string $tel): static
     {
         $this->tel = $tel;

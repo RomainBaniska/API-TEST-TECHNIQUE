@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Repository\ContactRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,4 +21,18 @@ class ContactController extends AbstractController
         $jsonContactList = $serializer->serialize($contactList, 'json');
         return new JsonResponse ($jsonContactList, Response::HTTP_OK, [], true);
     }   
+
+    // On récupère un contact unique
+    #[Route('/api/contacts/{id}', name: 'detailContact', methods: ['GET'])]
+    public function getDetailContacts(int $id, SerializerInterface $serializer, Contact $contact) {
+
+                // On convertit le numéro de téléphone au format international
+                $internationalPhoneNumber = $contact->getInternationalPhoneNumber();
+                // On met à jour le numéro de téléphone dans l'objet Contact
+                $contact->setTel($internationalPhoneNumber);
+
+         $jsonContact = $serializer->serialize($contact, 'json');
+         return new JsonResponse ($jsonContact, Response::HTTP_OK, [], true);
+    }
 }
+ 
