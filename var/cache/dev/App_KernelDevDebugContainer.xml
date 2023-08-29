@@ -13,6 +13,7 @@
       <parameter key="MakerBundle">Symfony\Bundle\MakerBundle\MakerBundle</parameter>
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
       <parameter key="DoctrineMigrationsBundle">Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle</parameter>
+      <parameter key="DoctrineFixturesBundle">Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -30,6 +31,10 @@
       <parameter key="DoctrineMigrationsBundle" type="collection">
         <parameter key="path">C:\Users\croma\Documents\GitHub\API-TEST-TECHNIQUE\vendor\doctrine\doctrine-migrations-bundle</parameter>
         <parameter key="namespace">Doctrine\Bundle\MigrationsBundle</parameter>
+      </parameter>
+      <parameter key="DoctrineFixturesBundle" type="collection">
+        <parameter key="path">C:\Users\croma\Documents\GitHub\API-TEST-TECHNIQUE\vendor\doctrine\doctrine-fixtures-bundle</parameter>
+        <parameter key="namespace">Doctrine\Bundle\FixturesBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -157,6 +162,9 @@
     </service>
     <service id="App\Entity" class="App\Entity" abstract="true">
       <tag name="container.excluded" source="in &quot;config/services.yaml&quot;"/>
+    </service>
+    <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true">
+      <tag name="doctrine.fixture.orm"/>
     </service>
     <service id="App\Repository\ContactRepository" class="App\Repository\ContactRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
@@ -2227,6 +2235,34 @@
       </call>
     </service>
     <service id="doctrine.migrations.storage.table_storage" class="Doctrine\Migrations\Metadata\Storage\TableMetadataStorageConfiguration"/>
+    <service id="doctrine.fixtures_load_command" class="Doctrine\Bundle\FixturesBundle\Command\LoadDataFixturesDoctrineCommand">
+      <tag name="console.command" command="doctrine:fixtures:load"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="doctrine.fixtures.loader"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="collection">
+        <argument key="default" type="service" id="doctrine.fixtures.purger.orm_purger_factory"/>
+      </argument>
+      <call method="setName">
+        <argument>doctrine:fixtures:load</argument>
+      </call>
+    </service>
+    <service id="doctrine.fixtures.loader" class="Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader">
+      <argument type="service" id="service_container"/>
+      <call method="addFixtures">
+        <argument type="collection">
+          <argument type="collection">
+            <argument key="fixture" type="service" id="App\DataFixtures\AppFixtures"/>
+            <argument key="groups" type="collection"/>
+          </argument>
+        </argument>
+      </call>
+    </service>
+    <service id="doctrine.fixtures.purger.orm_purger_factory" class="Doctrine\Bundle\FixturesBundle\Purger\ORMPurgerFactory">
+      <tag name="doctrine.fixtures.purger_factory" alias="default"/>
+    </service>
+    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ContactRepository" class="App\Repository\ContactRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\ContactRepository" class="App\Repository\ContactRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.7nzbL4K" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -3166,7 +3202,7 @@
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.IOBLL8T"/>
+      <argument type="service" id=".service_locator.dLfhQew"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -3225,6 +3261,7 @@
         <argument key="doctrine:migrations:status">doctrine_migrations.status_command</argument>
         <argument key="doctrine:migrations:up-to-date">doctrine_migrations.up_to_date_command</argument>
         <argument key="doctrine:migrations:version">doctrine_migrations.version_command</argument>
+        <argument key="doctrine:fixtures:load">doctrine.fixtures_load_command</argument>
         <argument key="make:auth">maker.auto_command.make_auth</argument>
         <argument key="make:command">maker.auto_command.make_command</argument>
         <argument key="make:twig-component">maker.auto_command.make_twig_component</argument>
@@ -3253,7 +3290,7 @@
         <argument key="make:security:form-login">maker.auto_command.make_security_form_login</argument>
       </argument>
     </service>
-    <service id=".service_locator.IOBLL8T" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.dLfhQew" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="console.command.about" type="service_closure" id=".console.command.about.lazy"/>
@@ -3313,6 +3350,7 @@
         <argument key="doctrine_migrations.status_command" type="service_closure" id="doctrine_migrations.status_command"/>
         <argument key="doctrine_migrations.up_to_date_command" type="service_closure" id="doctrine_migrations.up_to_date_command"/>
         <argument key="doctrine_migrations.version_command" type="service_closure" id="doctrine_migrations.version_command"/>
+        <argument key="doctrine.fixtures_load_command" type="service_closure" id="doctrine.fixtures_load_command"/>
         <argument key="maker.auto_command.make_auth" type="service_closure" id=".maker.auto_command.make_auth.lazy"/>
         <argument key="maker.auto_command.make_command" type="service_closure" id=".maker.auto_command.make_command.lazy"/>
         <argument key="maker.auto_command.make_twig_component" type="service_closure" id=".maker.auto_command.make_twig_component.lazy"/>
