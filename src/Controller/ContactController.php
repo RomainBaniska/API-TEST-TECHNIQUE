@@ -71,5 +71,19 @@ class ContactController extends AbstractController
        $em->flush();
        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
   }
+
+  // Switcher un Contact Actif/Inactif
+
+  #[Route('/api/contacts/{id}/toggle', name: 'toggleContact', methods: ['POST'])]
+  public function toggleContact(Contact $contact, EntityManagerInterface $em): JsonResponse
+  {
+      $newStatus = !$contact->isActive();
+      $contact->setIsActive($newStatus);
+      
+      $em->persist($contact);
+      $em->flush();
+
+      return new JsonResponse(['message' => 'Le contact a été togglé avec succès.'], JsonResponse::HTTP_OK);
+  }
 }
  

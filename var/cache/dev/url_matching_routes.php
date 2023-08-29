@@ -18,6 +18,7 @@ return [
                 .'|/_error/(\\d+)(?:\\.([^/]++))?(*:35)'
                 .'|/api/contacts/([^/]++)(?'
                     .'|(*:67)'
+                    .'|/toggle(*:81)'
                 .')'
             .')/?$}sDu',
     ],
@@ -27,6 +28,9 @@ return [
             [['_route' => 'detailContact', '_controller' => 'App\\Controller\\ContactController::getDetailContacts'], ['id'], ['GET' => 0], null, false, true, null],
             [['_route' => 'deleteContact', '_controller' => 'App\\Controller\\ContactController::deleteContact'], ['id'], ['DELETE' => 0], null, false, true, null],
             [['_route' => 'updateContact', '_controller' => 'App\\Controller\\ContactController::updateContact'], ['id'], ['PUT' => 0], null, false, true, null],
+        ],
+        81 => [
+            [['_route' => 'toggleContact', '_controller' => 'App\\Controller\\ContactController::toggleContact'], ['id'], ['POST' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
     ],
