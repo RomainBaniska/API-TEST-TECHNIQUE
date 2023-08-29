@@ -19,6 +19,10 @@ class AppFixtures extends Fixture
             $contact->setAddress("Adresse" . $i); 
             $contact->setTel("Tel" . $i); 
             $contact->setAge($i); 
+            // Au hasard, on définit si le contact est actif ou inactif
+            $isActive = random_int(0, 1);
+            $contact->setIsActive($isActive);
+
             $manager->persist($contact);
         }
 

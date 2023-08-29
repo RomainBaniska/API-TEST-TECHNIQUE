@@ -31,6 +31,9 @@ class Contact
     #[ORM\Column]
     private ?int $age = null;
 
+    #[ORM\Column]
+    private bool $isActive = true; // Par défaut, le contact est actif
+
     public function getId(): ?int
     {
         return $this->id;
@@ -116,6 +119,18 @@ class Contact
     public function setAge(int $age): static
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
