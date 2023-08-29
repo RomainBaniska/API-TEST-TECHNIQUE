@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Repository\ContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -43,5 +45,20 @@ class ContactController extends AbstractController
 
         return new JsonResponse (null, Response::HTTP_NO_CONTENT);
     }
+
+    #[Route('/api/contacts', name:"createContact", methods: ['POST'])]
+    public function createBook(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UrlGeneratorInterface $urlGenerator): JsonResponse 
+    {
+
+        $contact = $serializer->deserialize($request->getContent(), Contact::class, 'json');
+        $em->persist($contact);
+        $em->flush();
+
+        $jsonContact = $serializer->serialize($contact, 'json');
+        
+        $location = $urlGenerator->generate('detailContact', ['id' => $contact->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        return new JsonResponse($jsonContact, Response::HTTP_CREATED, ["Location" => $location], true);
+   }
 }
  

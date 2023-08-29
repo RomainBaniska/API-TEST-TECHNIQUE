@@ -8,7 +8,10 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
-        '/api/contacts' => [[['_route' => 'contacts', '_controller' => 'App\\Controller\\ContactController::getAllContacts'], null, ['GET' => 0], null, false, false, null]],
+        '/api/contacts' => [
+            [['_route' => 'contacts', '_controller' => 'App\\Controller\\ContactController::getAllContacts'], null, ['GET' => 0], null, false, false, null],
+            [['_route' => 'createContact', '_controller' => 'App\\Controller\\ContactController::createBook'], null, ['POST' => 0], null, false, false, null],
+        ],
     ],
     [ // $regexpList
         0 => '{^(?'

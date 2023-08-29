@@ -4,4 +4,8 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
+    'contacts' => [[], ['_controller' => 'App\\Controller\\ContactController::getAllContacts'], [], [['text', '/api/contacts']], [], [], []],
+    'detailContact' => [['id'], ['_controller' => 'App\\Controller\\ContactController::getDetailContacts'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/contacts']], [], [], []],
+    'deleteContact' => [['id'], ['_controller' => 'App\\Controller\\ContactController::deleteContact'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/contacts']], [], [], []],
+    'createContact' => [[], ['_controller' => 'App\\Controller\\ContactController::createBook'], [], [['text', '/api/contacts']], [], [], []],
 ];
